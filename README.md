@@ -23,6 +23,30 @@ Based on my experience with Ender 3 in Marlin and a Bambu Lab A1, I have some id
 - **Extra sensosrs**: XYZ sensor for input shaping and Filament runout sensor are a really worth upgrade.
 - **Bed mashing/levelling**: Ender 3's have a scewed X axis and you shall be able to fix it searching online. It will not prevent you from printing though, and is my lowest priority in the list of items to fix. I rather prefer upgrading the axis with rails first.
 
+## Host setup (Raspberry Pi 3B)
+
+`dwc_otg.speed=1` must be in `/boot/firmware/cmdline.txt`. It is not in this repo because
+`cmdline.txt` carries the SD card's own `PARTUUID`, so re-add the flag by hand after a reflash.
+
+Without it, prints die after a few hours with `Lost communication with MCU` or `Timer too
+close`. The webcam is high-speed (480M) and the CH340 is full-speed (12M) behind the same
+LAN9514 hub, so the Pi 3B's `dwc_otg` has to issue split transactions for the serial link and
+loses them under the camera's isochronous load. The flag forces the whole bus to full-speed,
+which removes split transactions entirely.
+
+Measured with the same 43min movement-only gcode, counting `bytes_retransmit` in `klippy.log`:
+
+| webcam | `dwc_otg` | retransmit |
+| --- | --- | --- |
+| 640x480@15 | default | 913 |
+| 320x240@5 | default | 418 |
+| off | default | 0 |
+| 320x240@5 | `speed=1` | 0 |
+| 640x480@15 | `speed=1` | 0 |
+
+Lowering the camera's resolution only halves the failure rate, so it is not a fix on its own.
+Ethernet also drops to 12Mbps, which does not matter here because the Pi is on WiFi.
+
 ## Firmware builds
 
 I'm adding `.bin` files that works in my printer to the repo so I don't have to build them again. They can be helpful in case it is not possible to build them in the future anymore.
