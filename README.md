@@ -37,10 +37,23 @@ this, with no other change:
 3. Work the pin up and down by hand, several times, to spread the fluid along its travel.
 4. Repeat 2 and 3 a few times.
 
+This buys time, it does not fix the sensor. The pin comes back a few prints later, and the
+reason it works at all is lubrication: the CR Touch is optical, the pin carries no current,
+so there is no electrical contact on it to clean. The fluid frees the solenoid core inside
+its coil, and once it evaporates the friction returns. A sensor that needs this is worn out
+and should be replaced.
+
 The failure is intermittent, which sends you chasing the wrong things. I lost a day on the
-mains outlet, the power strip, a smart plug and the solenoid before testing the pin contact.
-Run homing 15 times to judge a fix: a single pass means nothing, and a marginal contact still
-succeeds once in a while.
+mains outlet, the power strip, a smart plug and the solenoid before landing on the pin. Run
+homing 15 times to judge a fix: a single pass means nothing. Things I ruled out with
+measurements, so you don't repeat them:
+
+| suspected | measured |
+| --- | --- |
+| smart plug / power strip | 15 of 15 on the smart plug once the pin was freed |
+| hot bed | 8 of 8 at 68C after spraying the pin |
+| photointerrupter dirt | no change from cleaning it twice |
+| software reset, `probe_with_touch_mode` | no change |
 
 The LED helps: steady means healthy, blinking red means the sensor is in alarm.
 
