@@ -1,3 +1,6 @@
 # OS files
 .DS_Store
 Thumbs.db
+
+# Fotos e videos de diagnostico ficam locais
+pictures/
