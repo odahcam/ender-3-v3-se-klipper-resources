@@ -23,6 +23,27 @@ Based on my experience with Ender 3 in Marlin and a Bambu Lab A1, I have some id
 - **Extra sensosrs**: XYZ sensor for input shaping and Filament runout sensor are a really worth upgrade.
 - **Bed mashing/levelling**: Ender 3's have a scewed X axis and you shall be able to fix it searching online. It will not prevent you from printing though, and is my lowest priority in the list of items to fix. I rather prefer upgrading the axis with rails first.
 
+## CR Touch: "BLTouch failed to deploy"
+
+If homing fails with `BLTouch failed to deploy`, clean the pin before suspecting anything
+else. In my case the sensor failed 14 of 15 homing attempts and went back to 15 of 15 after
+this, with no other change:
+
+1. Clean the photointerrupter (the black U-shaped part on the sensor board) with isopropyl
+   alcohol on a cotton swab, both inner faces of the slot. Blow it dry and check no cotton
+   fibres stayed in the slot. Do not use contact cleaner here, it leaves a film on the optics.
+2. Extend the pin, spray contact cleaner on it, and release it so the pin carries the fluid
+   inside the body.
+3. Work the pin up and down by hand, several times, to spread the fluid along its travel.
+4. Repeat 2 and 3 a few times.
+
+The failure is intermittent, which sends you chasing the wrong things. I lost a day on the
+mains outlet, the power strip, a smart plug and the solenoid before testing the pin contact.
+Run homing 15 times to judge a fix: a single pass means nothing, and a marginal contact still
+succeeds once in a while.
+
+The LED helps: steady means healthy, blinking red means the sensor is in alarm.
+
 ## Host setup (Raspberry Pi 3B)
 
 `dwc_otg.speed=1` must be in `/boot/firmware/cmdline.txt`. It is not in this repo because
