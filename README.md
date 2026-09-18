@@ -62,6 +62,11 @@ The LED helps: steady means healthy, blinking red means the sensor is in alarm.
 `dwc_otg.speed=1` must be in `/boot/firmware/cmdline.txt`. It is not in this repo because
 `cmdline.txt` carries the SD card's own `PARTUUID`, so re-add the flag by hand after a reflash.
 
+This is a workaround, not a fix. It levels the whole bus down to full-speed so the split
+transactions never happen; the CH340 still hangs off the same weak controller. The fix is to
+drop USB entirely and run the MCU over UART through the LCD header (USART3, wiring in the
+header comment of `printer.cfg`), which is planned alongside the LCD delete.
+
 Without it, prints die after a few hours with `Lost communication with MCU` or `Timer too
 close`. The webcam is high-speed (480M) and the CH340 is full-speed (12M) behind the same
 LAN9514 hub, so the Pi 3B's `dwc_otg` has to issue split transactions for the serial link and
