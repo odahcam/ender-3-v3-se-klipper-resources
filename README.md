@@ -73,6 +73,10 @@ LAN9514 hub, so the Pi 3B's `dwc_otg` has to issue split transactions for the se
 loses them under the camera's isochronous load. The flag forces the whole bus to full-speed,
 which removes split transactions entirely.
 
+Verified on the 7h23m print that never used to finish, which died at 1min, 9min, 2h12 and
+6h40 across four attempts: it completed in 7h45 with `bytes_retransmit` sitting at 9 (the
+handshake value) from start to end, against 24 growing to 43191 before the August failure.
+
 Measured with the same 43min movement-only gcode, counting `bytes_retransmit` in `klippy.log`:
 
 | webcam | `dwc_otg` | retransmit |
