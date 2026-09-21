@@ -22,6 +22,7 @@ Based on my experience with Ender 3 in Marlin and a Bambu Lab A1, I have some id
 - **Original LCD screen with Klipper**: I think this is useless and I intend to use Creality's cable for the Nebula display to connect my Raspberry and do the infamous LCD delete.
 - **Extra sensosrs**: XYZ sensor for input shaping and Filament runout sensor are a really worth upgrade.
 - **Bed mashing/levelling**: Ender 3's have a scewed X axis and you shall be able to fix it searching online. It will not prevent you from printing though, and is my lowest priority in the list of items to fix. I rather prefer upgrading the axis with rails first.
+- **Soft TPU needs the spool overhead**: 80A underextrudes badly with the side-mounted spool, while 95A prints fine from it. The extruder gear has to overcome the nozzle back pressure and the force to unwind the spool at the same time, and soft filament compresses instead of advancing — I used to hand-feed the spool to get it printing at all. Moving the spool above the printer, so gravity feeds it, fixed it without touching any setting. Keeping the spool out of the heated enclosure matters too: TPU softens well below its melting point, and a warm 80A gives up sooner.
 
 ## CR Touch: "BLTouch failed to deploy"
 
